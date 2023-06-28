@@ -1,0 +1,161 @@
+mysql> use ban;
+Database changed
+
+mysql> select *from salary;
++------+----------+--------+
+| s_id | s_name   | amt    |
++------+----------+--------+
+|    1 | monthly  |  70000 |
+|    2 | weekly   |  65000 |
+|    3 | monthly  |  95000 |
+|    4 | 2_months | 195000 |
++------+----------+--------+
+4 rows in set (0.01 sec)
+
+mysql> select count(*) from salary;
++----------+
+| count(*) |
++----------+
+|        4 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select max(amt) from salary;
++----------+
+| max(amt) |
++----------+
+|   195000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select min(amt) as mini_amt from salary;
++----------+
+| mini_amt |
++----------+
+|    65000 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select distinct(amt) from salary;
++--------+
+| amt    |
++--------+
+|  70000 |
+|  65000 |
+|  95000 |
+| 195000 |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select avg(amt) from salary;
++-------------+
+| avg(amt)    |
++-------------+
+| 106250.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> use aban;
+Database changed
+mysql> create table pattern(
+    -> id int,
+    -> name varchar(20)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into pattern(id,name) values
+    -> (1,"raj"),
+    -> (2,"darshan"),
+    -> (3,"yograj"),
+    -> (4,"abhishek"),
+    -> (5,"roshan"),
+    -> (6,"sanket"),
+    -> (7,"aniket"),
+    -> (8,"atharva"),
+    -> (9,"kamlesh");
+Query OK, 9 rows affected (0.01 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> select *from pattern;
++------+----------+
+| id   | name     |
++------+----------+
+|    1 | raj      |
+|    2 | darshan  |
+|    3 | yograj   |
+|    4 | abhishek |
+|    5 | roshan   |
+|    6 | sanket   |
+|    7 | aniket   |
+|    8 | atharva  |
+|    9 | kamlesh  |
++------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select *from pattern where name like "%a";
++------+---------+
+| id   | name    |
++------+---------+
+|    8 | atharva |
++------+---------+
+1 row in set (0.00 sec)
+
+mysql> select *from pattern where name like "%a ";
+Empty set (0.00 sec)
+
+mysql> select *from pattern where name like "a%";
++------+----------+
+| id   | name     |
++------+----------+
+|    4 | abhishek |
+|    7 | aniket   |
+|    8 | atharva  |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select *from pattern where name like "_a%";
++------+---------+
+| id   | name    |
++------+---------+
+|    1 | raj     |
+|    2 | darshan |
+|    6 | sanket  |
+|    9 | kamlesh |
++------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select *from pattern where name like "_an%";
++------+--------+
+| id   | name   |
++------+--------+
+|    6 | sanket |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> select *from pattern where name like "an%";
++------+--------+
+| id   | name   |
++------+--------+
+|    7 | aniket |
++------+--------+
+1 row in set (0.00 sec)
+
+mysql> select *from pattern where name like "%an";
++------+---------+
+| id   | name    |
++------+---------+
+|    2 | darshan |
+|    5 | roshan  |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select *from pattern where name like "%ke%";
++------+--------+
+| id   | name   |
++------+--------+
+|    6 | sanket |
+|    7 | aniket |
++------+--------+
+2 rows in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,80 @@
+mysql> use mysql;
+Database changed
+mysql> create table hotel_reg(
+    -> room_no int,
+    -> name varchar(20),
+    -> city varchar(20)
+    -> );
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> insert into hotel_reg values(101,"Atharva","Nashik");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hotel_reg values(102,"Yash","Delhi");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hotel_reg values(103,"Sanket","Mumbai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into hotel_reg values(104,"Abhishek","Chennai");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hotel_reg values(105,"Raj","Nagpur");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hotel_reg values(106,"Sumit","Pune");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into hotel_reg values(107,"Kamlesh","Satara");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from hotel_reg;
++---------+----------+---------+
+| room_no | name     | city    |
++---------+----------+---------+
+|     101 | Atharva  | Nashik  |
+|     102 | Yash     | Delhi   |
+|     103 | Sanket   | Mumbai  |
+|     104 | Abhishek | Chennai |
+|     105 | Raj      | Nagpur  |
+|     106 | Sumit    | Pune    |
+|     107 | Kamlesh  | Satara  |
++---------+----------+---------+
+7 rows in set (0.02 sec)
+
+mysql> delimiter $$
+mysql> create procedure list_namess(inout name_list varchar(200))
+    -> begin
+    -> declare is_done integer default 0;
+    -> declare c_name varchar(50) default"";
+    -> declare h_cursor cursor for
+    -> select name from hotel_reg;
+    -> declare continue handler for not found set is_done = 1;
+    -> open h_cursor;
+    -> get_list: loop
+    -> fetch h_cursor into c_name;
+    -> if is_done = 1 then
+    -> leave get_list;
+    -> end if;
+    -> set name_list=concat(c_name,";",name_list);
+    -> end loop get_list;
+    -> close h_cursor;
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> set @name_list="";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call list_namess(@name_list);
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @name_list;
++-------------------------------------------------+
+| @name_list                                      |
++-------------------------------------------------+
+| Kamlesh;Sumit;Raj;Abhishek;Sanket;Yash;Atharva; |
++-------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql>

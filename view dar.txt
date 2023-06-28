@@ -1,0 +1,76 @@
+mysql> CREATE TABLE employees (
+    ->   id INT PRIMARY KEY,
+    ->   name VARCHAR(100),
+    ->   department VARCHAR(100),
+    ->   salary DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO employees (id, name, department, salary) VALUES
+    ->   (1, 'John Doe', 'Finance', 5000.00),
+    ->   (2, 'Jane Smith', 'Marketing', 6000.00),
+    ->   (3, 'Michael Johnson', 'HR', 4500.00);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> CREATE VIEW employee_info AS
+    -> SELECT name, department
+    -> FROM employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM employee_info;
++-----------------+------------+
+| name            | department |
++-----------------+------------+
+| John Doe        | Finance    |
+| Jane Smith      | Marketing  |
+| Michael Johnson | HR         |
++-----------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE VIEW employee_salary_info AS
+    -> SELECT name, department, salary
+    -> FROM employees;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM employee_salary_info;
++-----------------+------------+---------+
+| name            | department | salary  |
++-----------------+------------+---------+
+| John Doe        | Finance    | 5000.00 |
+| Jane Smith      | Marketing  | 6000.00 |
+| Michael Johnson | HR         | 4500.00 |
++-----------------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE employee_info
+    -> SET department = 'Sales'
+    -> WHERE name = 'John Doe';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employees;
++----+-----------------+------------+---------+
+| id | name            | department | salary  |
++----+-----------------+------------+---------+
+|  1 | John Doe        | Sales      | 5000.00 |
+|  2 | Jane Smith      | Marketing  | 6000.00 |
+|  3 | Michael Johnson | HR         | 4500.00 |
++----+-----------------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE VIEW consolidated_info AS
+    -> SELECT ei.name, esi.department, esi.salary
+    -> FROM employee_info ei
+    -> JOIN employee_salary_info esi ON ei.name = esi.name;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT * FROM consolidated_info;
++-----------------+------------+---------+
+| name            | department | salary  |
++-----------------+------------+---------+
+| John Doe        | Sales      | 5000.00 |
+| Jane Smith      | Marketing  | 6000.00 |
+| Michael Johnson | HR         | 4500.00 |
++-----------------+------------+---------+
+3 rows in set (0.00 sec)

@@ -1,0 +1,70 @@
+mysql> use aban;
+Database changed
+
+mysql> create table employee(
+    -> id int,
+    -> name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into employee(id,name) values
+    -> (1,"raj"),
+    -> (2,"yograj"),
+    -> (3,"darshan");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *from employee;
++------+---------+
+| id   | name    |
++------+---------+
+|    1 | raj     |
+|    2 | yograj  |
+|    3 | darshan |
++------+---------+
+3 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create procedure impli_ex()
+    -> begin
+    -> declare is_done boolean default false;
+    -> declare emp_id int;
+    -> declare emp_name varchar(20);
+    -> declare cur cursor for select id,name from employee;
+    -> declare continue handler for not found set is_done = true;
+    -> open cur;
+    -> get_loop: loop
+    -> fetch cur into emp_id,emp_name;
+    -> if is_done then
+    -> leave get_loop;
+    -> end if;
+    -> select concat(emp_name,'(ID: ',emp_id,')') as emp_details;
+    -> end loop;
+    -> close cur;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> call impli_ex();
+    -> end $$
++-------------+
+| emp_details |
++-------------+
+| raj(ID: 1)  |
++-------------+
+1 row in set (0.01 sec)
+
++---------------+
+| emp_details   |
++---------------+
+| yograj(ID: 2) |
++---------------+
+1 row in set (0.01 sec)
+
++----------------+
+| emp_details    |
++----------------+
+| darshan(ID: 3) |
++----------------+
+1 row in set (0.02 sec)
+
+Query OK, 0 rows affected (0.03 sec)

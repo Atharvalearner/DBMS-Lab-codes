@@ -1,0 +1,96 @@
+mysql> use ban;
+Database changed
+mysql> create table patient(
+    -> id int primary key,
+    -> name varchar(20),
+    -> temp float,
+    -> bp int
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into patient(id,name,temp,bp) values
+    -> (1,"RAJ",98.2,120),
+    -> (2,"RAMESH",96.4,125),
+    -> (3,"tanzo",86.8,130),
+    -> (4,"madara",89.3,128);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select *from patient;
++----+--------+------+------+
+| id | name   | temp | bp   |
++----+--------+------+------+
+|  1 | RAJ    | 98.2 |  120 |
+|  2 | RAMESH | 96.4 |  125 |
+|  3 | tanzo  | 86.8 |  130 |
+|  4 | madara | 89.3 |  128 |
++----+--------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,temp,exp(temp) as expo_temp from patient;
++----+--------+------+-----------------------+
+| id | name   | temp | expo_temp             |
++----+--------+------+-----------------------+
+|  1 | RAJ    | 98.2 |  4.443414189271303e42 |
+|  2 | RAMESH | 96.4 |  7.344947876371827e41 |
+|  3 | tanzo  | 86.8 | 4.9746479832830745e37 |
+|  4 | madara | 89.3 |  6.060361901297177e38 |
++----+--------+------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,bp,ln(bp) as logarithmic_bp from patient;
++----+--------+------+--------------------+
+| id | name   | bp   | logarithmic_bp     |
++----+--------+------+--------------------+
+|  1 | RAJ    |  120 |  4.787491742782046 |
+|  2 | RAMESH |  125 | 4.8283137373023015 |
+|  3 | tanzo  |  130 |  4.867534450455582 |
+|  4 | madara |  128 |  4.852030263919617 |
++----+--------+------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,bp,mod(bp,10) as mod_bp from patient;
++----+--------+------+--------+
+| id | name   | bp   | mod_bp |
++----+--------+------+--------+
+|  1 | RAJ    |  120 |      0 |
+|  2 | RAMESH |  125 |      5 |
+|  3 | tanzo  |  130 |      0 |
+|  4 | madara |  128 |      8 |
++----+--------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,temp,round(temp) as round_temp from patient;
++----+--------+------+------------+
+| id | name   | temp | round_temp |
++----+--------+------+------------+
+|  1 | RAJ    | 98.2 |         98 |
+|  2 | RAMESH | 96.4 |         96 |
+|  3 | tanzo  | 86.8 |         87 |
+|  4 | madara | 89.3 |         89 |
++----+--------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,temp,ceil(temp) as ceil_temp from patient;
++----+--------+------+-----------+
+| id | name   | temp | ceil_temp |
++----+--------+------+-----------+
+|  1 | RAJ    | 98.2 |        99 |
+|  2 | RAMESH | 96.4 |        97 |
+|  3 | tanzo  | 86.8 |        87 |
+|  4 | madara | 89.3 |        90 |
++----+--------+------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select id,name,greatest(bp,temp) as high_value from patient;
++----+--------+------------+
+| id | name   | high_value |
++----+--------+------------+
+|  1 | RAJ    |        120 |
+|  2 | RAMESH |        125 |
+|  3 | tanzo  |        130 |
+|  4 | madara |        128 |
++----+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql>

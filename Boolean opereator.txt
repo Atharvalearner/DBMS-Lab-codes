@@ -1,0 +1,43 @@
+mysql> use ban;
+Database changed
+mysql> select *from emp;
++----+----------+------+----------+
+| id | name     | age  | dept     |
++----+----------+------+----------+
+|  1 | raj      |   20 | IT       |
+|  2 | yograj   |   22 | CS       |
+|  3 | abhishek |   19 | IT       |
+|  4 | sumit    |   29 | CS       |
+|  5 | kamlesh  |   24 | robotics |
++----+----------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select *from emp where dept = "CS" and age > 20;
++----+--------+------+------+
+| id | name   | age  | dept |
++----+--------+------+------+
+|  2 | yograj |   22 | CS   |
+|  4 | sumit  |   29 | CS   |
++----+--------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select *from emp where age <= 20 or dept = "CS";
++----+----------+------+------+
+| id | name     | age  | dept |
++----+----------+------+------+
+|  1 | raj      |   20 | IT   |
+|  2 | yograj   |   22 | CS   |
+|  3 | abhishek |   19 | IT   |
+|  4 | sumit    |   29 | CS   |
++----+----------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select *from emp where not dept = "CS";
++----+----------+------+----------+
+| id | name     | age  | dept     |
++----+----------+------+----------+
+|  1 | raj      |   20 | IT       |
+|  3 | abhishek |   19 | IT       |
+|  5 | kamlesh  |   24 | robotics |
++----+----------+------+----------+
+3 rows in set (0.00 sec)

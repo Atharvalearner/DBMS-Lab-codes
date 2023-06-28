@@ -1,0 +1,32 @@
+mysql> use ab;
+Database changed
+mysql> create table trial(
+    -> name varchar(20),
+    -> price int,
+    -> tax int,
+    -> total int
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> create trigger total_price
+    -> before insert on trial
+    -> for each row
+    -> begin
+    -> set new.total = new.price + new.tax;
+    -> end $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> delimiter $$
+mysql> insert into trial(name,price,tax) values("Lamborgini",80000000,3000000);
+    -> end $$
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from trial;
+    -> end $$
++------------+----------+---------+----------+
+| name       | price    | tax     | total    |
++------------+----------+---------+----------+
+| Lamborgini | 80000000 | 3000000 | 83000000 |
++------------+----------+---------+----------+
+1 row in set (0.00 sec)

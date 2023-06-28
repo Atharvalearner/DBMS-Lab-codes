@@ -1,0 +1,119 @@
+mysql> use aban;
+Database changed
+mysql> create table student(
+    -> id int primary key,
+    -> name varchar(20),
+    -> dept varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student(id,name,dept) values
+    -> (1,"raj","computer"),
+    -> (2,"yograj","mechanical"),
+    -> (3,"abhishek","robotics");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> create table faculty(
+    -> fid int primary key,
+    -> fname varchar(20),
+    -> fdept varchar(20),
+    -> foreign key(fid) references student(id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into faculty(fid,fname,fdept) values
+    -> (1,"SNP","electrical"),
+    -> (2,"PB","E&TC"),
+    -> (3,"MKP","maths");
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *from student;
++----+----------+------------+
+| id | name     | dept       |
++----+----------+------------+
+|  1 | raj      | computer   |
+|  2 | yograj   | mechanical |
+|  3 | abhishek | robotics   |
++----+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from faculty;
++-----+-------+------------+
+| fid | fname | fdept      |
++-----+-------+------------+
+|   1 | SNP   | electrical |
+|   2 | PB    | E&TC       |
+|   3 | MKP   | maths      |
++-----+-------+------------+
+3 rows in set (0.00 sec)
+
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(20) | YES  |     | NULL    |       |
+| dept  | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> desc faculty;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| fid   | int         | NO   | PRI | NULL    |       |
+| fname | varchar(20) | YES  |     | NULL    |       |
+| fdept | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table faculty add column salary int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc faculty;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| fid    | int         | NO   | PRI | NULL    |       |
+| fname  | varchar(20) | YES  |     | NULL    |       |
+| fdept  | varchar(20) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update faculty
+    -> set salary = 90000
+    -> where fid = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update faculty
+    -> set salary = 150000
+    -> where fid = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update faculty
+    -> set salary = 70000
+    -> where fid = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from faculty;
++-----+-------+------------+--------+
+| fid | fname | fdept      | salary |
++-----+-------+------------+--------+
+|   1 | SNP   | electrical |  90000 |
+|   2 | PB    | E&TC       | 150000 |
+|   3 | MKP   | maths      |  70000 |
++-----+-------+------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> drop table faculty;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select *from faculty;
+ERROR 1146 (42S02): Table 'aban.faculty' doesn't exist
+mysql>

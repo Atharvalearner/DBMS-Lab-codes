@@ -1,0 +1,93 @@
+mysql> use aban;
+Database changed
+mysql> create table bank(
+    -> id int primary key auto_increment,
+    -> name varchar(20),
+    -> balance int,
+    -> age int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into bank(id,name,balance,age) values
+    -> (1,"raj",50000,19),
+    -> (2,"yograj",80000,20),
+    -> (3,"atharva",83000,18),
+    -> (4,"abhishek",70000,17),
+    -> (5,"kamlesh",79000,15);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from bank;
++----+----------+---------+------+
+| id | name     | balance | age  |
++----+----------+---------+------+
+|  1 | raj      |   50000 |   19 |
+|  2 | yograj   |   80000 |   20 |
+|  3 | atharva  |   83000 |   18 |
+|  4 | abhishek |   70000 |   17 |
+|  5 | kamlesh  |   79000 |   15 |
++----+----------+---------+------+
+5 rows in set (0.00 sec)
+
+mysql> select id,name,balance,age from bank where age = 18;
++----+---------+---------+------+
+| id | name    | balance | age  |
++----+---------+---------+------+
+|  3 | atharva |   83000 |   18 |
++----+---------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select id,name,balance from bank where age = 17;
++----+----------+---------+
+| id | name     | balance |
++----+----------+---------+
+|  4 | abhishek |   70000 |
++----+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select id,name,age from bank where balance > 80000;
++----+---------+------+
+| id | name    | age  |
++----+---------+------+
+|  3 | atharva |   18 |
++----+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select id,name,age from bank where balance >= 80000;
++----+---------+------+
+| id | name    | age  |
++----+---------+------+
+|  2 | yograj  |   20 |
+|  3 | atharva |   18 |
++----+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select id,name from bank where balance < 75000;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | raj      |
+|  4 | abhishek |
++----+----------+
+2 rows in set (0.00 sec)
+
+mysql> select id,name from bank where balance <= 70000;
++----+----------+
+| id | name     |
++----+----------+
+|  1 | raj      |
+|  4 | abhishek |
++----+----------+
+2 rows in set (0.00 sec)
+
+mysql> select *from bank where balance <> 70000;
++----+---------+---------+------+
+| id | name    | balance | age  |
++----+---------+---------+------+
+|  1 | raj     |   50000 |   19 |
+|  2 | yograj  |   80000 |   20 |
+|  3 | atharva |   83000 |   18 |
+|  5 | kamlesh |   79000 |   15 |
++----+---------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql>

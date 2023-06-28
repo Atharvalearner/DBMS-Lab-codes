@@ -1,0 +1,164 @@
+mysql> use ban;
+Database changed
+mysql> select *from bank;
++----+--------+--------------+---------+----------+-----------+
+| id | name   | address      | type    | work_emp | branch_no |
++----+--------+--------------+---------+----------+-----------+
+|  1 | BOB    | panchvati    | private |       39 |      NULL |
+|  2 | BOM    | mumbai_naka  | public  |     NULL |      NULL |
+|  3 | FEDRAL | CBS          | public  |     NULL |      NULL |
+|  4 | swiss  | hirawadi     | public  |       56 |      NULL |
+|  5 | UNION  | DINDORI_NAKA | private |     NULL |      NULL |
++----+--------+--------------+---------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> create table account(
+    -> a_no int,
+    -> a_name varchar(20),
+    -> a_type varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into account(a_no,a_name,a_type) values(1,"raj","saving"),
+    -> (2,"roshan","current"),
+    -> (3,"yograj","saving"),
+    -> (4,"kamlesh","current"),
+    -> (5,"darshan","saving");
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from account;
++------+---------+---------+
+| a_no | a_name  | a_type  |
++------+---------+---------+
+|    1 | raj     | saving  |
+|    2 | roshan  | current |
+|    3 | yograj  | saving  |
+|    4 | kamlesh | current |
+|    5 | darshan | saving  |
++------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> alter table account add column customer varchar(20);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select *from account;
++------+---------+---------+----------+
+| a_no | a_name  | a_type  | customer |
++------+---------+---------+----------+
+|    1 | raj     | saving  | NULL     |
+|    2 | roshan  | current | NULL     |
+|    3 | yograj  | saving  | NULL     |
+|    4 | kamlesh | current | NULL     |
+|    5 | darshan | saving  | NULL     |
++------+---------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> update account
+    -> set customer = "BOM"
+    -> where a_no = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update account
+    -> set customer = "BOB"
+    -> where a_no = 3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update account
+    -> set customer = "BOB"
+    -> where a_no = 5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update account
+    -> set customer = "swiss"
+    -> where a_no = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update account
+    -> set customer = "fedral"
+    -> where a_no = 4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from account;
++------+---------+---------+----------+
+| a_no | a_name  | a_type  | customer |
++------+---------+---------+----------+
+|    1 | raj     | saving  | BOM      |
+|    2 | roshan  | current | swiss    |
+|    3 | yograj  | saving  | BOB      |
+|    4 | kamlesh | current | fedral   |
+|    5 | darshan | saving  | BOB      |
++------+---------+---------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select name from bank
+    -> union
+    -> select customer from account;
++--------+
+| name   |
++--------+
+| BOB    |
+| BOM    |
+| FEDRAL |
+| swiss  |
+| UNION  |
++--------+
+5 rows in set (0.00 sec)
+
+mysql> select name from bank
+    -> intersect
+    -> select customer from account;
++--------+
+| name   |
++--------+
+| BOB    |
+| BOM    |
+| fedral |
+| swiss  |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select name from bank
+    -> union all
+    -> select customer from account;
++--------+
+| name   |
++--------+
+| BOB    |
+| BOM    |
+| FEDRAL |
+| swiss  |
+| UNION  |
+| BOM    |
+| swiss  |
+| BOB    |
+| fedral |
+| BOB    |
++--------+
+10 rows in set (0.00 sec)
+
+mysql> select name from bank
+    -> except
+    -> select customer from account;
++-------+
+| name  |
++-------+
+| UNION |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select name from bank
+    -> where name not in(
+    -> select customer from account
+    -> );
++-------+
+| name  |
++-------+
+| UNION |
++-------+
+1 row in set (0.00 sec)

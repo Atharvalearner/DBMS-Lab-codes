@@ -1,0 +1,149 @@
+mysql> use ban;
+Database changed
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| c_id    | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+---1NF FORM
+mysql> create table accounts(
+    -> a_id int primary key,
+    -> cust_id int,
+    -> acc_no varchar(20),
+    -> balance int,
+    -> foreign key(cust_id) references customer(c_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+---- 1NF FORM
+mysql> create table transaction(
+    -> t_id int primary key,
+    -> acc_id int,
+    -> amt int,
+    -> foreign key(acc_id) references accounts(a_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+
+---- 1NF FORM
+mysql> create table employee(
+    -> e_id int primary key,
+    -> name varchar(20),
+    -> tran_id int,
+    -> foreign key(tran_id) references transaction(t_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+
+---- 2NF FORM
+mysql> create table cust_details(
+    -> cust_id int primary key,
+    -> phone varchar(20),
+    -> foreign key(cust_id) references customer(c_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+
+---- 2NF FORM
+mysql> create table trans_details(
+    -> tran_id int primary key,
+    -> trans_date date,
+    -> trans_amt int,
+    -> foreign key(tran_id) references transaction(t_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+
+---- 3NF FORM
+mysql> create table emp_type(
+    -> emp_id int primary key,
+    -> type varchar(20)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table employee add emp_id int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee add foreign key(emp_id) references emp_type(emp_id);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| e_id    | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| tran_id | int         | YES  | MUL | NULL    |       |
+| emp_id  | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc customer;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| c_id    | int         | NO   | PRI | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
+| age     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc accounts;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| a_id    | int         | NO   | PRI | NULL    |       |
+| cust_id | int         | YES  | MUL | NULL    |       |
+| acc_no  | varchar(20) | YES  |     | NULL    |       |
+| balance | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc transaction;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| t_id   | int  | NO   | PRI | NULL    |       |
+| acc_id | int  | YES  | MUL | NULL    |       |
+| amt    | int  | YES  |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc cust_details;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cust_id | int         | NO   | PRI | NULL    |       |
+| phone   | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc trans_details;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| tran_id    | int  | NO   | PRI | NULL    |       |
+| trans_date | date | YES  |     | NULL    |       |
+| trans_amt  | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc emp_type;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| emp_id | int         | NO   | PRI | NULL    |       |
+| type   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>

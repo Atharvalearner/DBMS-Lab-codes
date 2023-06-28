@@ -1,0 +1,83 @@
+mysql> use ab;
+Database changed
+mysql> select *from student;
++----+--------+-----------+---------+--------+
+| id | name   | course_id | address | color  |
++----+--------+-----------+---------+--------+
+|  1 | shiva  |        33 | NULL    | blue   |
+|  3 | vishnu |        35 | NULL    | blue   |
+|  5 | bramha |        38 | NULL    | white  |
+|  8 | indra  |        42 | NULL    | skin   |
+| 11 | surya  |        45 | NULL    | yellow |
++----+--------+-----------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> create view stud_info as
+    -> select name,course_id
+    -> from student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select *from stud_info;
++--------+-----------+
+| name   | course_id |
++--------+-----------+
+| shiva  |        33 |
+| vishnu |        35 |
+| bramha |        38 |
+| indra  |        42 |
+| surya  |        45 |
++--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> create view more_info as
+    -> select id,color
+    -> from student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select *from more_info;
++----+--------+
+| id | color  |
++----+--------+
+|  1 | shiva  |
+|  3 | vishnu |
+|  5 | bramha |
+|  8 | indra  |
+| 11 | surya  |
++----+--------+
+5 rows in set (0.00 sec)
+
+mysql> create view more as
+    -> select id,name,color
+    -> from student;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select *from more;
++----+--------+--------+
+| id | name   | color  |
++----+--------+--------+
+|  1 | shiva  | blue   |
+|  3 | vishnu | blue   |
+|  5 | bramha | white  |
+|  8 | indra  | skin   |
+| 11 | surya  | yellow |
++----+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update student
+    -> set address = "swarga_lok"
+    -> where name = "indra";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from student;
++----+--------+-----------+------------+--------+
+| id | name   | course_id | address    | color  |
++----+--------+-----------+------------+--------+
+|  1 | shiva  |        33 | NULL       | blue   |
+|  3 | vishnu |        35 | NULL       | blue   |
+|  5 | bramha |        38 | NULL       | white  |
+|  8 | indra  |        42 | swarga_lok | skin   |
+| 11 | surya  |        45 | NULL       | yellow |
++----+--------+-----------+------------+--------+
+5 rows in set (0.00 sec)
+
